@@ -1,7 +1,7 @@
 <template>
     <section>
-        <Customheader/>
+        <MyHeader/>
         <slot/>
-        <Customfooter/>
+        <MyFooter/>
     </section>
 </template>

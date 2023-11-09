@@ -5,7 +5,7 @@ export interface Products {
     price?: number,
     image?: string,
     color?: string,
-    isCart?: boolean,
+    inCart?: boolean,
     desc?: string,
     quantity?: number,
 }
