@@ -1,9 +1,9 @@
 <template>
-    <header class="w-full border-b border-slate-200 py-6">
+    <header class="w-full border-b border-slate-200 py-6 bg-blue-200">
         <div class="container">
             <div class="flex justify-between items-center">
                 <div>
-                    <NuxtLink to="/" class="ml-10 text-xl font-bold">Mock Shopping Site</NuxtLink>
+                    <NuxtLink to="/" class="ml-10 text-xl font-bold">Mock E-commerce Site</NuxtLink>
                 </div>
                 <nav class="flex items-center gap-6">
                     <NuxtLink to="/" class="text-base">Home</NuxtLink>

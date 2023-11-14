@@ -1,19 +1,32 @@
 <script lang="ts" setup>
-import { products } from "~/composables/constants/products";
-import { Products } from "~/types/products";
+import { useProductsStore } from "~/stores/products";
+import { Product } from "~/types/product";
 
+const selectedCategory = ref("");
+const isLoading = ref(true);
+const productStore = useProductsStore();
 const route = useRoute();
 
-const id =
-    typeof route.params.id === 'string' ?
-        parseInt(route.params.id) :
-        null;
+// ref of empty object of type product
+const product = ref({} as Product);
 
-const product = ref(
-    products.find((item: Products) => item.id === id)
-);
+productStore.getProductList().then(() => {
+    product.value = productStore.products.find((item: Product) => item.id === id);
+    if(!product.value){
+        alert(`Product with ID ${id} not found! Press OK to redirect to product page.`);
+        useRouter().push({ path: "/product" });
+        return;
+    }
+    isLoading.value = false;
+});
+
+const id = typeof route.params.id === 'string' ? parseInt(route.params.id) : null;
+
 </script>
 
 <template>
-    <ProductDetail :product="product" />
+    <h1 v-if="isLoading" class="text-4xl font-bold mb-3">
+        Loading product, please wait...
+    </h1>
+    <ProductDetail v-else :product="product" />
 </template>

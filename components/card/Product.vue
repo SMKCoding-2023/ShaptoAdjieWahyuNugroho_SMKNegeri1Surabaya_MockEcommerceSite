@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type {Products} from '~/types/products';
+import type {Product} from '~/types/product';
 
 const props = defineProps({
     product: {
@@ -8,12 +8,14 @@ const props = defineProps({
     },
 });
 
+const { baseStorageUrl } = useAppConfig();
+
 const productRef = ref(props.product);
 
 const addToCart = () => {
     productRef.value.inCart = !productRef.value.inCart;
     let localStorageData = localStorage.getItem("products");
-    let products: Products[] = [];
+    let products: Product[] = [];
 
     if(localStorageData){
         products = JSON.parse(localStorageData);
@@ -33,7 +35,7 @@ const addToCart = () => {
     <section class="bg-white shadow-xl rounded-xl overflow-hidden">
         <div :class="`w-full h-[200px] p-5 bg-gray-300`">
             <NuxtLink :to="`/product/${productRef.id}`">
-                <img :src="productRef.image" class="w-full h-full object-contain" />
+                <img :src="baseStorageUrl + props.product.image" class="w-full h-full object-contain" />
             </NuxtLink>
         </div>
         <div class="px-5 pb-5 pt-9 relative">

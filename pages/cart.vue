@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type {Products} from '~/types/products';
+import type {Product} from '~/types/product';
 
-const products = ref<Products[]>([]);
+const products = ref<Product[]>([]);
 const totalPrice = computed(() => {
     return products.value.filter((product) => { product.price !== undefined})
         .reduce((acc, curVal) => acc + curVal.price!, 0);
@@ -43,7 +43,7 @@ onMounted(() => {
                         <div v-if="products.length > 0">
                             <div v-for="(v, index) in products" :key="index" class="flex gap-4 items-center justify-between">
                                 <span class="text-limit limit-1 text-sm">{{v.name}}</span>
-                                <span class="text-sm font-semibold text-right">{{v.price}}</span>
+                                <span class="text-sm font-semibold text-right">${{v.price}}</span>
                             </div>
                         </div>
                         <div v-else>
@@ -54,7 +54,7 @@ onMounted(() => {
                     </div>
                     <div class="flex pt-4 items-center justify-between mb-6">
                         <span class="text-base">Total</span>
-                        <span class="text-base font-bold">{{totalPrice}}</span>
+                        <span class="text-base font-bold">${{totalPrice}}</span>
                     </div>
                     <button class="bg-blue-600 text-white text-base font-bold w-full py-2 rounded-lg">
                         Checkout

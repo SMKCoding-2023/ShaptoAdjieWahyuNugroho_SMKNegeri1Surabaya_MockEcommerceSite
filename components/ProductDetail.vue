@@ -1,10 +1,31 @@
 <script setup lang="ts">
+import { Product } from "~/types/product";
+const { baseStorageUrl } = useAppConfig();
 const props = defineProps({
     product: {
         type: Object,
         default: {},
     },
 });
+
+const productRef = ref(props.product);
+const addToCart = () => {
+    productRef.value.inCart = !productRef.value.inCart;
+    let localStorageData = localStorage.getItem("products");
+    let products: Product[] = [];
+
+    if(localStorageData){
+        products = JSON.parse(localStorageData);
+    }
+
+    if(productRef.value.inCart){
+        products.push(productRef.value);
+        localStorage.setItem("products", JSON.stringify(products));
+    } else {
+        products = products.filter((item) => item.id !== productRef.value.id)
+        localStorage.setItem("products", JSON.stringify(products));
+    }
+}
 </script>
 <template>
     <section class="py-10">
@@ -15,14 +36,14 @@ const props = defineProps({
             </NuxtLink>
             <div class="flex items-center">
                 <div class="w-1/2 bg-gray-300 mr-5 rounded-3xl flex justify-center items-center p-5 h-[500px]">
-                    <img :src="props.product.image" class="w-full h-full object-contain" />
+                    <img :src="baseStorageUrl + props.product.image" class="w-full h-full object-contain" />
                 </div>
                 <div class="w-1/2 pl-5">
                     <p class="text-xl font-light mb-3">{{ props.product.category }}</p>
                     <h1 class="text-4xl font-bold mb-3">{{ props.product.name }}</h1>
                     <h3 class="text-4xl font-light mb-3">${{ props.product.price }}</h3>
                     <p class="mb-10">{{ props.product.desc }}</p>
-                    <div class="flex flex-col gap-4">
+                    <div @click="addToCart" class="flex flex-col gap-4">
                         <div
                             class="w-full flex items-center gap-2 bg-blue-600 text-white py-3 justify-center rounded-lg cursor-pointer hover:bg-blue-600/80 transition duration-300 relative"
                         >

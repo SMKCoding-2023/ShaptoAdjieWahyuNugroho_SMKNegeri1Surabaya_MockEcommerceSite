@@ -1,21 +1,61 @@
 <script lang="ts" setup>
-import {category} from "~/composables/constants/category";
+import { useCategoryStore } from '~/stores/category';
+const categoryStore = useCategoryStore();
 
-const categories = ref(category);
-const form = ref({ name: "" });
+const isSuccess = ref(false);
+const isLoading = ref(false);
 const isShowAlert = ref(false);
+const message = ref("");
+const router = useRouter();
+const form = ref({ name: "" });
 
-const submitCategory = () => {
-    categories.value.push({
-        id: categories.value.length + 1,
+categoryStore.getCategoryList();
+const categories = storeToRefs(categoryStore);
+
+const createCategory = async () =>
+{
+    isLoading.value = true;
+    
+    let payload = {
         name: form.value.name
-    });
+    };
+    await categoryStore.createCategory(payload);
+
+    isSuccess.value = categoryStore.status;
+    message.value = categoryStore.message;
     isShowAlert.value = true;
-    form.value.name = "";
-    setTimeout(() => {
-        isShowAlert.value = false;
-    }, 3000);
+    isLoading.value = false;
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+    });
+
+    if (categoryStore.status)
+    {
+        setTimeout(() =>
+        {
+            router.push({ path: "/product" });
+        }, 1000);
+    }
 }
+
+//////////////// Pre-database code.
+// import {category} from "~/composables/constants/category";
+
+// const categories = ref(category);
+// const isShowAlert = ref(false);
+
+// const submitCategory = () => {
+//     categories.value.push({
+//         id: categories.value.length + 1,
+//         name: form.value.name
+//     });
+//     isShowAlert.value = true;
+//     form.value.name = "";
+//     setTimeout(() => {
+//         isShowAlert.value = false;
+//     }, 3000);
+// }
 </script>
 
 <template>
@@ -25,7 +65,10 @@ const submitCategory = () => {
             <div v-if="isShowAlert" class="p-4 mb-4 text-sm rounded-lg bg-green-100 text-green-800">
                 Category created successfully.
             </div>
-            <form @submit.prevent="submitCategory">
+            <div>
+                {{  }}
+            </div>
+            <form @submit.prevent="createCategory">
                 <div class="mb-6">
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900">
                         Name
