@@ -4,6 +4,8 @@ import { useStorageStore } from "~/stores/storage";
 import { useProductsStore } from '~/stores/products';
 import type { FormField } from '~/types/product';
 
+definePageMeta({middleware: ["user-access"]});
+
 const categoryStore = useCategoryStore();
 const storageStore = useStorageStore();
 const productStore = useProductsStore();

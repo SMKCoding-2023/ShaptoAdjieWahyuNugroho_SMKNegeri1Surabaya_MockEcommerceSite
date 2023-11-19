@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type {Product} from '~/types/product';
 
+definePageMeta({middleware: ["user-access"]});
+
 const products = ref<Product[]>([]);
 const totalPrice = computed(() => {
     return products.value.filter((product) => { product.price !== undefined})

@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { useProductsStore } from "~/stores/products";
 
+definePageMeta({middleware: ["user-access"]});
+
 const selectedCategory = ref("");
 const productStore = useProductsStore();
 const productList = ref([]);

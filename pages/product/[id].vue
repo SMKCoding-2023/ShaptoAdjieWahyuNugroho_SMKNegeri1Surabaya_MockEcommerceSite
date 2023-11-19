@@ -2,6 +2,8 @@
 import { useProductsStore } from "~/stores/products";
 import { Product } from "~/types/product";
 
+definePageMeta({middleware: ["user-access"]});
+
 const selectedCategory = ref("");
 const isLoading = ref(true);
 const productStore = useProductsStore();
