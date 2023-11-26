@@ -32,23 +32,89 @@ const addToCart = () => {
 </script>
 
 <template>
-    <section class="bg-white shadow-xl rounded-xl overflow-hidden">
-        <div :class="`w-full h-[200px] p-5 bg-gray-300`">
+    <section>
+        <div class="image">
             <NuxtLink :to="`/product/${productRef.id}`">
-                <img :src="baseStorageUrl + props.product.image" class="w-full h-full object-contain" />
+                <img :src="baseStorageUrl + props.product.image" />
             </NuxtLink>
         </div>
-        <div class="px-5 pb-5 pt-9 relative">
+        <div class="infoContainer">
             <NuxtLink :to="`/product/${productRef.id}`">
-                <h3 class="text-lg font-bold mb-4 text-limit limit-2">{{ productRef.name }}</h3>
+                <h3 class="name">{{ productRef.name }}</h3>
             </NuxtLink>
-            <div class="flex justify-between items-center">
-                <span class="text-sm font-normal">{{ productRef.category }}</span>
-                <span class="text-sm font-normal">${{ productRef.price }}</span>
+            <div class="smallInfoContainer">
+                <span class="infoText">{{ productRef.category }}</span>
+                <span class="infoText">${{ productRef.price }}</span>
             </div>
-            <div @click="addToCart" :class="`cursor-pointer absolute -top-5 right-7 w-[50px] h-[50px] ${productRef.isCart ? 'bg-blue-600 text-white' : 'bg-white'} shadow-xl rounded-full flex justify-center items-center hover:bg-blue-600 hover:text-white transition duration-300`">
+            <div @click="addToCart" :class="`addToCart ${productRef.inCart ? 'inCart' : 'notInCart'}`">
                 <i class="ri-shopping-cart-2-line"></i>
             </div>
         </div>
     </section>
 </template>
+
+<style scoped>
+section {
+    background-color: var(--secondary-bg-color);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+div.image {
+    width: 100%;
+    height: 200px;
+    padding: 1.25rem;
+    background-color: var(--ghost-primary-color);
+}
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.infoContainer {
+    padding: 2.25rem 1.25rem 1.25rem;
+    position: relative;
+}
+.name {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+.smallInfoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.infoText {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+}
+.addToCart {
+    cursor: pointer;
+    position: absolute;
+    top: -1.25rem;
+    right: 1.75rem;
+    width: 50px;
+    height: 50px;
+    /* drop-shadow-xl */
+    filter: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
+    border-radius: 9e9px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 150ms ease-in-out;
+}
+.addToCart:hover {
+    background-color: var(--translucent-primary-color);
+}
+.inCart {
+    background-color: var(--primary-color);
+    color: white;
+}
+.notInCart {
+    background-color: var(--bg-color);
+    color: var(--text-primary-color);
+}
+</style>

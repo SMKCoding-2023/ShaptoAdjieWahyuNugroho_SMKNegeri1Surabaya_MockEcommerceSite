@@ -1,0 +1,79 @@
+:root{
+    --primary-color: #6867C5;
+    --translucent-primary-color: #6867C599;
+    --ghost-primary-color: #6867C544;
+    --dark-primary-color: #53529E;
+    --bg-color: white;
+    --secondary-bg-color: #d8ffff;
+    --tertiary-bg-color: #b0ffff;
+    --text-primary-color: black;
+    --text-secondary-color: #333;
+    --text-tertiary-color: #666;
+    --text-inverted-color: white;
+    
+    /* Header */
+    --header-color: #bfdbfe;
+    --nav-hover-color: #93c5fd;
+    --login-bg-color: #3b82f6;
+    --login-bg-color-hover: #3b82f6cc;
+    --login-text-color: white;
+    --logout-border-color: #3b82f6;
+    --logout-bg-color: #dbeafe;
+    --logout-bg-color-hover: #dbeafe99;
+    --logout-text-color: royalblue;
+
+    /* Products page */
+    --create-category-color: #f97316;
+    --create-category-hover-color: #db5b00;
+    --create-category-border-color: #ac4800;
+    --create-product-color: #22c55e;
+    --create-product-hover-color: #10a948;
+    --create-product-border-color: #008832;
+
+    /* Success/Error */
+    --success-color: #22c53b44;
+    --success-accent-color: #13a910dd;
+    --error-color: #f93c1644;
+    --error-accent-color: #db0f00dd;
+
+    /* Constants */
+    --size-small: 470px;
+    --size-medium: 598px;
+    --size-large: 854px;
+    --size-xl: 1110px;
+}
+
+.dark-mode body {
+    --primary-color: #53529E;
+    --translucent-primary-color: #53529E99;
+    --ghost-primary-color: #53529E44;
+    --dark-primary-color: #3a3a6e;
+    --bg-color: black;
+    --secondary-bg-color: #111114;
+    --tertiary-bg-color: #111114;
+    --text-primary-color: white;
+    --text-secondary-color: rgb(170, 170, 170);
+    --text-tertiary-color: rgb(120, 120, 120);
+    --text-inverted-color: black;
+
+    /* Header */
+    --header-color: #324863;
+    --nav-hover-color: #3a6dbf;
+    --logout-border-color: #b6ffff;
+    --logout-bg-color: transparent;
+    --logout-bg-color-hover: #FFF1;
+    --logout-text-color: #b6ffff;
+
+    /* Products page */
+    --create-category-color: #f9731644;
+    --create-category-hover-color: #f9731688;
+    --create-category-border-color: #ac4800;
+    --create-product-color: #22c55e44;
+    --create-product-hover-color: #22c55e88;
+    --create-product-border-color: #009b39;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary-color);
+}

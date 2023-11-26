@@ -9,12 +9,16 @@ export default defineNuxtConfig({
   },
 
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss','@vite-pwa/nuxt','@pinia/nuxt'],
+  modules: ['@nuxtjs/tailwindcss','@vite-pwa/nuxt','@pinia/nuxt','@nuxtjs/color-mode'],
 
+  // NOTE: planning to use pure CSS instead of TailwindCSS
+  // TODO: uninstall tailwindcss
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
     configPath: '~/tailwind.config.ts',
   },
+
+  css: ['~/assets/css/style.css'],
 
   pwa: {
     manifest: {

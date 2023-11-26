@@ -2,9 +2,6 @@
 import { useProductsStore } from "~/stores/products";
 import { Product } from "~/types/product";
 
-definePageMeta({middleware: ["user-access"]});
-
-const selectedCategory = ref("");
 const isLoading = ref(true);
 const productStore = useProductsStore();
 const route = useRoute();
@@ -27,8 +24,18 @@ const id = typeof route.params.id === 'string' ? parseInt(route.params.id) : nul
 </script>
 
 <template>
-    <h1 v-if="isLoading" class="text-4xl font-bold mb-3">
+    <h1 v-if="isLoading" class="loadingText">
         Loading product, please wait...
     </h1>
     <ProductDetail v-else :product="product" />
 </template>
+
+<style scoped>
+.loadingText {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: 700;
+    margin: 5rem;
+    text-align: center;
+}
+</style>

@@ -28,31 +28,138 @@ const addToCart = () => {
 }
 </script>
 <template>
-    <section class="py-10">
-        <div class="container">
-            <NuxtLink to="/product" class="bg-white border border-slate-300 w-max flex items-center gap-1 py-2 px-5 rounded-full mb-7 cursor-pointer">
-                <i class="ri-arrow-left-s-line text-base font-medium"></i>
-                <span class="text-base font-medium">Back</span>
-            </NuxtLink>
-            <div class="flex items-center">
-                <div class="w-1/2 bg-gray-300 mr-5 rounded-3xl flex justify-center items-center p-5 h-[500px]">
-                    <img :src="baseStorageUrl + props.product.image" class="w-full h-full object-contain" />
-                </div>
-                <div class="w-1/2 pl-5">
-                    <p class="text-xl font-light mb-3">{{ props.product.category }}</p>
-                    <h1 class="text-4xl font-bold mb-3">{{ props.product.name }}</h1>
-                    <h3 class="text-4xl font-light mb-3">${{ props.product.price }}</h3>
-                    <p class="mb-10">{{ props.product.desc }}</p>
-                    <div @click="addToCart" class="flex flex-col gap-4">
-                        <div
-                            class="w-full flex items-center gap-2 bg-blue-600 text-white py-3 justify-center rounded-lg cursor-pointer hover:bg-blue-600/80 transition duration-300 relative"
-                        >
-                            <i class="ri-shopping-cart-2-line"></i>
-                            <span>Add to Cart</span>
-                        </div>
+    <section>
+        <NuxtLink to="/product" class="backButton">
+            <i class="ri-arrow-left-s-line backText"></i>
+            <span class="backText">Back</span>
+        </NuxtLink>
+        <div class="product">
+            <div class="imageContainer">
+                <img :src="baseStorageUrl + props.product.image" />
+            </div>
+            <div class="infoContainer">
+                <p class="productCategory">{{ props.product.category }}</p>
+                <h1 class="productName">{{ props.product.name }}</h1>
+                <h3 class="productPrice">${{ props.product.price }}</h3>
+                <p class="productDesc">{{ props.product.desc }}</p>
+                <button @click="addToCart" class="cart">
+                    <div :class="productRef.inCart ? 'inCart' : 'notInCart'">
+                        <i class="ri-shopping-cart-2-line"></i>
+                        <span>
+                            {{productRef.inCart ? "Remove from Cart" : "Add to Cart"}}
+                        </span>
                     </div>
-                </div>
+                </button>
             </div>
         </div>
     </section>
 </template>
+
+<style scoped>
+section { padding: 2.5rem }
+.backButton {
+    background-color: var(--bg-color);
+    border: 2px solid var(--tertiary-bg-color);
+    width: max-content;
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 9e9px;
+    margin-bottom: 1.75rem;
+    cursor: pointer;
+    transition: all 150ms ease;
+}
+.backButton:hover {
+    background-color: var(--primary-color);
+    border: 2px solid var(--bg-color);
+}
+.backText {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 500;
+}
+.product {
+    display: flex;
+    align-items: center;
+}
+div.imageContainer {
+    width: 50%;
+    background-color: var(--secondary-bg-color);
+    margin-right: 1.25rem;
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.25rem;
+    height: 500px;
+}
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+div.infoContainer {
+    width: 50%;
+    padding-left: 1.25rem;
+}
+.productCategory {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+}
+.productName {
+    font-size: 2.25rem;
+    line-height: 2.75rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+.productPrice {
+    font-size: 2.25rem;
+    line-height: 2.75rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    color: var(--success-accent-color);
+}
+.productDesc { margin-bottom: 2.5rem; }
+
+button.cart {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.notInCart {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 0;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 150ms ease;
+}
+.notInCart:hover {
+    background-color: var(--dark-primary-color);
+}
+.inCart {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--tertiary-bg-color);
+    color: var(--text-primary-color);
+    padding: 0.75rem 0;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 150ms ease;
+}
+.inCart:hover {
+    background-color: var(--text-tertiary-color);
+}
+</style>

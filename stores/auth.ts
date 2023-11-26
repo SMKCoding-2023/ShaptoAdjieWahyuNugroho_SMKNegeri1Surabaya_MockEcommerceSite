@@ -38,8 +38,9 @@ export const useAuthStore = defineStore("auth", {
                 this.message = "Logged in successfully.";
             } catch (error) {
                 this.status = false;
-                console.error("Login failed: ", error);
-                this.message = "Login failed: " + error;
+                // console.error("Login failed: ", error);
+                // this.message = "Login failed: " + error;
+                this.message = "Login failed. Please check your email and password.";
             }
         },
         async register(payload: AuthPayload) {
@@ -57,7 +58,7 @@ export const useAuthStore = defineStore("auth", {
                 this.setAccessToken(response);
                 this.setRefreshToken(response);
                 this.status = true;
-                this.message = "Registered successfully.";
+                this.message = "Registered successfully. Please check your inbox for a verification email.";
             } catch (error) {
                 this.status = false;
                 console.error("Registration failed: ", error);

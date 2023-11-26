@@ -16,25 +16,26 @@ const onPick = (category: string) => {
 </script>
 
 <template>
-    <div class="relative select-none">
-        <div class="border border-primary flex items-center justify-center px-3 py-2 rounded-lg gap-4 cursor-pointer w-full" @click="showList = !showList">
-            <span class="text-primary font-medium">
+    <div class="dropdown-container">
+        <div class="dropdown-text-div" @click="showList = !showList">
+            <span class="dropdown-text">
                 {{ selectedCategory === "" ? "Filter by category" : selectedCategory }}
             </span>
-            <i :class="`ri-arrow-down-s-line text-primary text-xl text-bold transition duration-300 ${showList ? 'rotate-180' : 'rotate-0'}`"></i>
+            <i :class="`ri-arrow-down-s-line dropdown-arrow ${showList ? 'rotate-180' : 'rotate-0'}`"></i>
         </div>
 
         <!-- Dropdown menu -->
-        <div v-show="showList" class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-xl w-full absolute top-14">
-            <ul class="py-2 text-sm text-gray-700">
+        <div v-show="showList" class="dropdown-menu">
+            <ul class="dropdown-list">
                 <li>
-                    <span class="block px-4 py-2 hover:bg-primary hover:text-white transition duration-200 cursor-pointer"
+                    <span class="dropdown-entry"
                       @click="onPick('')">
                         All
                     </span>
                 </li>
                 <li v-for="(item, index) in categories" :key="index">
-                    <span class="block px-4 py-2 hover:bg-primary hover:text-white transition duration-200 cursor-pointer"
+                    <hr>
+                    <span class="dropdown-entry"
                       @click="onPick(item?.name)">
                         {{ item?.name }}
                     </span>
@@ -43,3 +44,67 @@ const onPick = (category: string) => {
         </div>
     </div>
 </template>
+
+<style scoped>
+.dropdown-container {
+    position: relative;
+    user-select: none;
+}
+div.dropdown-text-div {
+    border: 1px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    gap: 1rem;
+    cursor: pointer;
+    width: 100%;
+}
+
+i.dropdown-arrow {
+    color: var(--primary-color);
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+    transition: all 150ms ease;
+}
+
+div.dropdown-menu {
+    z-index: 10;
+    background-color: var(--bg-color);
+    border: 1px solid var(--text-secondary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    width: 100%;
+    position: absolute;
+    top: 3.5rem;
+}
+
+ul.dropdown-list {
+    padding: 0.5rem 0;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: var(--text-secondary-color);
+}
+
+hr {
+    height: 1px;
+    border-color: var(--translucent-primary-color);
+    margin: 0.5rem 0;
+}
+span.dropdown-entry {
+    display: block;
+    padding: 0.5rem 1rem;
+}
+span.dropdown-entry:hover {
+    background-color: var(--translucent-primary-color);
+    transition: all 150ms ease;
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+
+.rotate-0 { transform: rotate(0deg); }
+.rotate-180 { transform: rotate(180deg); }
+</style>

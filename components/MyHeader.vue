@@ -22,23 +22,104 @@ const logout = async () =>
         path: "/"
     })
 }
+
+const switchMode = () => {
+    let colorMode = useColorMode();
+    colorMode.preference = (colorMode.preference === 'dark' ? 'light' : 'dark');
+}
 </script>
 
 <template>
-    <header class="w-full border-b border-slate-200 py-6 bg-blue-200">
+    <header>
         <div class="container">
-            <div class="flex justify-between items-center">
-                <div>
-                    <NuxtLink to="/" class="ml-10 text-xl font-bold">Mock E-commerce Site</NuxtLink>
-                </div>
-                <nav class="flex items-center gap-6">
-                    <NuxtLink to="/" class="text-base">Home</NuxtLink>
-                    <NuxtLink to="/product" class="text-base">Products</NuxtLink>
-                    <NuxtLink to="/cart" class="text-base">Cart</NuxtLink>
-                    <NuxtLink v-if="!isAuthenticated" to="/login" class="text-base bg-blue-600 px-6 py-2 text-white rounded-lg hover:bg-blue-600/80">Log in</NuxtLink>
-                    <div v-else class="text-base cursor-pointer border border-blue-600 bg-blue-100 px-6 py-2 text-blue rounded-lg hover:bg-blue-100/80" @click="logout">Log out</div>
-                </nav>
-            </div>
+            <NuxtLink to="/" class="title">Mock E-commerce Site</NuxtLink>
+            <nav>
+                <button @click="switchMode" 
+                    :class="'themeSwitch '+($colorMode.preference === 'dark' ? 'ri-contrast-2-line' : 'ri-sun-fill')">
+                </button>
+                <NuxtLink to="/" class="navItem">Home</NuxtLink>
+                <NuxtLink to="/product" class="navItem">Products</NuxtLink>
+                <NuxtLink to="/cart" class="navItem">Cart</NuxtLink>
+                <NuxtLink v-if="!isAuthenticated" to="/login" class="login">Log in</NuxtLink>
+                <div v-else class="logout" @click="logout">Log out</div>
+            </nav>
         </div>
     </header>
 </template>
+
+<style scoped>
+header {
+    width: 100%;
+    border-bottom: 1px solid var(--text-tertiary-color);
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    background-color: var(--header-color);
+}
+div.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 2.5rem;
+}
+.title {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+}
+nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+nav NuxtLink {
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+.themeSwitch {
+    margin-right: 2rem;
+    padding-inline: 0.5rem;
+    font-size: 1.5rem;
+    background-color: transparent;
+    border-radius: 0.375rem;
+    transition: background-color 150ms ease-in-out;
+}
+.themeSwitch:hover {
+    background-color: var(--nav-hover-color);
+}
+.navItem {
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    background-color: transparent;
+    transition: background-color 150ms ease-in-out;
+}
+.navItem:hover {
+    background-color: var(--nav-hover-color);
+}
+.login {
+    font-size: 1rem;
+    background-color: var(--login-bg-color);
+    padding-inline: 1.5rem;
+    padding-block: 0.5rem;
+    color: var(--login-text-color);
+    border-radius: 0.375rem;
+    transition: background-color 150ms ease-in-out;
+}
+.login:hover {
+    background-color: var(--login-bg-color-hover);
+}
+.logout {
+    /* text-base cursor-pointer border border-blue-600 bg-blue-100 px-6 py-2 text-blue rounded-lg hover:bg-blue-100/80 */
+    /* Convert to plain CSS */
+    font-size: 1rem;
+    cursor: pointer;
+    border: 1px solid var(--logout-border-color);
+    background-color: var(--logout-bg-color);
+    padding: 0.5rem 1.5rem;
+    color: var(--logout-text-color);
+    border-radius: 0.375rem;
+    transition: background-color 150ms ease-in-out;
+}
+.logout:hover {
+    background-color: var(--logout-bg-color-hover);
+}
+</style>
