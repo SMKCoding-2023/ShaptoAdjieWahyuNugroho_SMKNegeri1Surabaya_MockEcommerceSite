@@ -5,11 +5,8 @@ definePageMeta({middleware: ["user-access"]});
 
 const products = ref<Product[]>([]);
 const totalPrice = computed(() => {
-    let subtotal = 0
-    products.value.forEach((product) => {
-        subtotal += (product.price ?? 0) * (product.quantity ?? 0)
-    })
-    return subtotal;
+    return products.value.filter((product) => { product.price !== undefined})
+        .reduce((acc, curVal) => acc + curVal.price!, 0);
 })
 const removeFromCart = (id: number) => {
     products.value = products.value.filter((item) => item.id !== id);
@@ -22,30 +19,15 @@ onMounted(() => {
         products.value = JSON.parse(localStorageData);
     }
 })
-
-const router = useRouter();
-const checkOut = () => {
-    if (products.value.length > 0) {
-        router.push({ path: "/checkout" });
-    }
-}
 </script>
 
+<!-- TODO: Add functionality -->
 <template>
 <section>
     <div>
         <div class="leftContainer">
             <div class="headingContainer">
-                <h1 class="heading">Shopping Cart</h1>
-                <p class="heading">{{products.length}} Item{{products.length !== 1 ? "s" : ""}}</p>
-            </div>
-            <div v-if="products.length > 0" class="cards">
-                <template v-for="(v,index) in products" :key="index">
-                    <CardCart :product="v" @removeFromCart="removeFromCart"/>
-                </template>
-            </div>
-            <div v-else>
-                <h5 class="emptyCart">You have no items in your cart.</h5>
+                <h1 class="heading">Checkout</h1>
             </div>
         </div>
         <div class="rightContainer">
@@ -53,20 +35,19 @@ const checkOut = () => {
             <div class="orderContainer">
                 <div v-if="products.length > 0">
                     <div v-for="(v, index) in products" :key="index" class="product">
-                        <span class="productName">{{v.name}} (x{{v.quantity}})</span>
-                        <span class="productPrice">${{(v.quantity ?? 0) * (v.price ?? 0)}}</span>
+                        <span class="productName">{{v.name}}</span>
+                        <span class="productPrice">${{v.price}}</span>
                     </div>
                 </div>
                 <div v-else>
                     <p class="emptyCart">You have no items in your cart.</p>
                 </div>
             </div>
-            <div v-if="products.length > 0" class="totalPriceContainer">
+            <div class="totalPriceContainer">
                 <span class="totalText">Total</span>
                 <span class="totalPrice">${{totalPrice}}</span>
             </div>
-            <div v-else style="height: 1rem;"/>
-            <button @click="checkOut" :class="(products.length > 0 ? 'checkout' : 'disabled')">
+            <button class="checkout">
                 Checkout
             </button>
         </div>
@@ -153,7 +134,7 @@ span.totalPrice {
     font-weight: 700;
 }
 
-.checkout {
+button.checkout {
     /* bg-blue-600 text-white text-base font-bold w-full py-2 rounded-lg */
     background-color: var(--primary-color);
     color: white;
@@ -165,21 +146,10 @@ span.totalPrice {
     border: 2px solid transparent;
     border-radius: 0.5rem;
 }
-.checkout:hover {
+button.checkout:hover {
     background-color: var(--dark-primary-color);
 }
 button.checkout:focus {
     border: 2px solid var(--primary-color);
-}
-button.disabled {
-    cursor: not-allowed;
-    background-color: var(--tertiary-bg-color);
-    color: var(--text-primary-color);
-    font-size: 1rem;
-    line-height: 1.5rem;
-    font-weight: 700;
-    width: 100%;
-    padding: 0.5rem 0;
-    border-radius: 0.5rem;
 }
 </style>

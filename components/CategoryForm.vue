@@ -42,7 +42,7 @@ const createCategory = async () =>
 
 <template>
     <section>
-        <div class="w-500px">
+        <div>
             <h1>Create Category</h1>
             <div v-if="isShowAlert && isSuccess" class="success">
                 Category created successfully.
@@ -51,7 +51,7 @@ const createCategory = async () =>
                 Failed to create category: {{ message }}
             </div>
             <form @submit.prevent="createCategory">
-                <div class="mb-6">
+                <div>
                     <label for="name" class="name">
                         Name
                     </label>
@@ -98,6 +98,7 @@ h1 {
     background-color: var(--error-color);
     color: var(--error-accent-color);
 }
+form > div { margin-bottom: 1.5rem }
 label.name {
     display: block;
     margin-bottom: 0.5rem;

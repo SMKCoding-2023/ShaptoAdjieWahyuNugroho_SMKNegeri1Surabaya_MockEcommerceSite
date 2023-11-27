@@ -11,8 +11,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss','@vite-pwa/nuxt','@pinia/nuxt','@nuxtjs/color-mode'],
 
-  // NOTE: planning to use pure CSS instead of TailwindCSS
-  // TODO: uninstall tailwindcss
+  // TailwindCSS is only there because for some reason when I remove it everything breaks.
+  // We'll only use plain CSS in this project, though; TailwindCSS often results in
+  // very long class names that are hard to read and maintain.
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
     configPath: '~/tailwind.config.ts',

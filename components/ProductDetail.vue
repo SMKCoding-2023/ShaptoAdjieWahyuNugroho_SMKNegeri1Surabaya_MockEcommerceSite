@@ -19,12 +19,13 @@ const addToCart = () => {
     }
 
     if(productRef.value.inCart){
+        productRef.value.quantity = 1;
         products.push(productRef.value);
-        localStorage.setItem("products", JSON.stringify(products));
     } else {
+        productRef.value.quantity = 0;
         products = products.filter((item) => item.id !== productRef.value.id)
-        localStorage.setItem("products", JSON.stringify(products));
     }
+        localStorage.setItem("products", JSON.stringify(products));
 }
 </script>
 <template>

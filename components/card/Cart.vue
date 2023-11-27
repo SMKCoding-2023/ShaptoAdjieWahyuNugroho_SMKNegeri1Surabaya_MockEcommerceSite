@@ -1,32 +1,57 @@
 <script lang="ts" setup>
+import type {Product} from '~/types/product';
 const { baseStorageUrl } = useAppConfig();
+
 const props = defineProps({
     product: {
         type: Object,
         default: {}
     }
 });
+
+const productRef = ref(props.product);
+
+const changeQuantity = (num: number) => {
+    productRef.value.quantity += num;
+    productRef.value.quantity = Math.max(productRef.value.quantity, 1);
+    let localStorageData = localStorage.getItem("products");
+    let products: Product[] = [];
+
+    // Save quantity
+    if(localStorageData){
+        products = JSON.parse(localStorageData);
+    }
+    products.forEach(element => {
+        if(element.id === productRef.value.id){
+            element.quantity = productRef.value.quantity;
+        }
+    });
+
+    localStorage.setItem("products", JSON.stringify(products));
+}
 </script>
 
-<!-- TODO: Add quantity count/modification -->
 <template>
     <div class="outer">
         <div class="imageContainer">
-            <img :src="baseStorageUrl + props.product.image" :alt="'Picture of ' + props.product.name"/>
+            <img :src="baseStorageUrl + productRef.image" :alt="'Picture of ' + productRef.name"/>
         </div>
         <div class="infoContainer">
-            <h5 class="productName">{{props.product.name}}</h5>
-            <p class="productPrice">${{props.product.price}}</p>
+            <h5 class="productName">{{productRef.name}}</h5>
+            <p class="productPrice">${{productRef.price}}</p>
 
-            <!-- give me a good class name for the below div -->
             <div class="productControls">
                 <div class="amountControls">
-                    <button class="adjustAmount">-</button>
-                    <div class="amount">1</div>
-                    <button class="adjustAmount">+</button>
+                    <button @click="changeQuantity(-1)" class="adjustAmount">
+                        <i class="ri-subtract-line"></i>
+                    </button>
+                    <div class="amount">{{productRef.quantity}}</div>
+                    <button @click="changeQuantity(1)" class="adjustAmount">
+                        <i class="ri-add-line"></i>
+                    </button>
                 </div>
-                <button @click="$emit('removeFromCart',props.product.id)" class="removeFromCart">
-                    <i class="ri-delete-bin-7-fill removeFromCart"></i>
+                <button @click="$emit('removeFromCart',productRef.id)" class="removeFromCart">
+                    <i class="ri-delete-bin-line"></i>
                     <span class="removeFromCart">Delete</span>
                 </button>
             </div>
@@ -86,7 +111,16 @@ img {
 }
 button.adjustAmount {
     cursor: pointer;
-    padding: 0.25rem 1rem 0.25rem 0.5rem;
+    height: 2.2rem;
+    width: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    transition: all 150ms ease-in-out;
+}
+button.adjustAmount:hover {
+    background-color: var(--ghost-primary-color);
 }
 .amount {
     padding: 0.25rem 0.5rem;
@@ -106,6 +140,7 @@ button.removeFromCart {
     padding: 0.5rem 0.75rem;
     border-radius: 9e9px;
     cursor: pointer;
+    transition: all 150ms ease-in-out;
 }
 button.removeFromCart:hover {
     background-color: var(--error-accent-color);

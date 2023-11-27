@@ -49,6 +49,11 @@ const submitLogin = async () => {
                     class="formItemInput"
                     :placeholder="item.placeholder" :required="item.required">
             </div>
+            <div class="fail">
+                WARNING: This will send your email and password in PLAIN TEXT, <br>
+                and is VERY vulnerable to <a href="https://w.wiki/3S77" class="link">MITM attacks</a>. PLEASE do not use your usual password. <br>
+                We also recommend you to use a <a href="https://google.com/search?q=temp-mail" class="link">temporary email address</a> for email verification.
+            </div>
             <button type="submit"
                 class="submit">
                 <span v-if="!isLoading">Login to your account</span>
@@ -66,7 +71,7 @@ const submitLogin = async () => {
                 </div>
             </button>
             <div class="register">
-                Don't have an account? <NuxtLink to="/register" class="registerLink">Sign up</NuxtLink>
+                Don't have an account? <NuxtLink to="/register" class="link">Sign up</NuxtLink>
             </div>
         </form>
     </div>
@@ -191,8 +196,8 @@ svg.loading {
     font-weight: 500;
     color: var(--text-secondary-color);
 }
-.registerLink { color: --logout-text-color }
-.registerLink:hover { text-decoration: underline }
+.link { color: var(--logout-text-color) }
+.link:hover { text-decoration: underline }
 .sr-only {
     position: absolute;
     width: 1px;

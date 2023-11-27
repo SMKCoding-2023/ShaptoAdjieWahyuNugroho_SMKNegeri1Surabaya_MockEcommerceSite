@@ -31,7 +31,7 @@ const switchMode = () => {
 
 <template>
     <header>
-        <div class="container">
+        <div>
             <NuxtLink to="/" class="title">Mock E-commerce Site</NuxtLink>
             <nav>
                 <button @click="switchMode" 
@@ -55,7 +55,7 @@ header {
     padding-bottom: 1.5rem;
     background-color: var(--header-color);
 }
-div.container {
+header > div {
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -28,15 +28,13 @@ const onPick = (category: string) => {
         <div v-show="showList" class="dropdown-menu">
             <ul class="dropdown-list">
                 <li>
-                    <span class="dropdown-entry"
-                      @click="onPick('')">
+                    <span class="dropdown-entry" @click="onPick('')">
                         All
                     </span>
                 </li>
                 <li v-for="(item, index) in categories" :key="index">
                     <hr>
-                    <span class="dropdown-entry"
-                      @click="onPick(item?.name)">
+                    <span class="dropdown-entry" @click="onPick(item?.name)">
                         {{ item?.name }}
                     </span>
                 </li>

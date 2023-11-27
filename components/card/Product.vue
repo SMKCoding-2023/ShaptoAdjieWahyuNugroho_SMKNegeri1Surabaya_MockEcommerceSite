@@ -22,18 +22,19 @@ const addToCart = () => {
     }
 
     if(productRef.value.inCart){
+        productRef.value.quantity = 1;
         products.push(productRef.value);
-        localStorage.setItem("products", JSON.stringify(products));
     } else {
+        productRef.value.quantity = 0;
         products = products.filter((item) => item.id !== productRef.value.id)
-        localStorage.setItem("products", JSON.stringify(products));
     }
+        localStorage.setItem("products", JSON.stringify(products));
 }
 </script>
 
 <template>
     <section>
-        <div class="image">
+        <div class="imageContainer">
             <NuxtLink :to="`/product/${productRef.id}`">
                 <img :src="baseStorageUrl + props.product.image" />
             </NuxtLink>
@@ -60,7 +61,7 @@ section {
     border-radius: 0.75rem;
     overflow: hidden;
 }
-div.image {
+div.imageContainer {
     width: 100%;
     height: 200px;
     padding: 1.25rem;

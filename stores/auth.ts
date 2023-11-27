@@ -58,7 +58,7 @@ export const useAuthStore = defineStore("auth", {
                 this.setAccessToken(response);
                 this.setRefreshToken(response);
                 this.status = true;
-                this.message = "Registered successfully. Please check your inbox for a verification email.";
+                this.message = "Registered successfully. Please check your inbox to verify your email.";
             } catch (error) {
                 this.status = false;
                 console.error("Registration failed: ", error);

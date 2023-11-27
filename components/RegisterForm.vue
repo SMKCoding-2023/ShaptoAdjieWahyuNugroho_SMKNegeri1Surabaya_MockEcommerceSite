@@ -28,12 +28,6 @@ const submitRegister = async () =>
     message.value = authStore.message;
     isShowAlert.value = true;
     isLoading.value = false;
-
-    if (authStore.status) {
-        router.push({
-            path: "/product"
-        })
-    }
 }
 </script>
 
@@ -54,6 +48,11 @@ const submitRegister = async () =>
                     class="formItemInput"
                     :placeholder="item.placeholder" :required="item.required">
             </div>
+            <div class="fail">
+                WARNING: This will send your email and password in PLAIN TEXT, <br>
+                and is VERY vulnerable to <a href="https://w.wiki/3S77" class="link">MITM attacks</a>. PLEASE do not use your usual password. <br>
+                We also recommend you to use a <a href="https://google.com/search?q=temp-mail" class="link">temporary email address</a> for email verification.
+            </div>
             <button type="submit" class="submit">
                 <span v-if="!isLoading">Register an account</span>
                 <div v-else role="status">
@@ -70,7 +69,7 @@ const submitRegister = async () =>
                 </div>
             </button>
             <div class="login">
-                Already have an account? <NuxtLink to="/login" class="loginLink">Sign in</NuxtLink>
+                Already have an account? <NuxtLink to="/login" class="link">Sign in</NuxtLink>
             </div>
         </form>
     </div>
@@ -195,8 +194,8 @@ svg.loading {
     font-weight: 500;
     color: var(--text-secondary-color);
 }
-.loginLink { color: --logout-text-color }
-.loginLink:hover { text-decoration: underline }
+.link { color: var(--logout-text-color) }
+.link:hover { text-decoration: underline }
 .sr-only {
     position: absolute;
     width: 1px;
