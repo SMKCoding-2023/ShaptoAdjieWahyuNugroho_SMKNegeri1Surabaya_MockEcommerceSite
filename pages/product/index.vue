@@ -13,7 +13,7 @@ productStore.getProductList().then(() => {
 </script>
 
 <template>
-    <section>
+    <section class="productSection">
         <div>
             <div class="buttons">
                 <NuxtLink to="/category/create" class="create-category">
@@ -34,10 +34,10 @@ productStore.getProductList().then(() => {
 </template>
 
 <style scoped>
-section {
+section.productSection {
     padding: 0 3rem;
 }
-section > div {
+section.productSection > div {
     padding: 2.5rem 0;
 }
 .buttons {

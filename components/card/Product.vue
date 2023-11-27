@@ -64,7 +64,7 @@ section {
 div.imageContainer {
     width: 100%;
     height: 200px;
-    padding: 1.25rem;
+    padding: 1.25rem 0;
     background-color: var(--ghost-primary-color);
 }
 img {
@@ -73,7 +73,7 @@ img {
     object-fit: contain;
 }
 .infoContainer {
-    padding: 2.25rem 1.25rem 1.25rem;
+    padding: 2.25rem 1.75rem;
     position: relative;
 }
 .name {
