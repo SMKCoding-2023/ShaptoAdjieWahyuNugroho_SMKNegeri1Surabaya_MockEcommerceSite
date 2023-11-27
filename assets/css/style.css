@@ -71,6 +71,8 @@
     --create-product-color: #22c55e44;
     --create-product-hover-color: #22c55e88;
     --create-product-border-color: #009b39;
+
+    --error-accent-color: #ff1100;
 }
 
 body {
