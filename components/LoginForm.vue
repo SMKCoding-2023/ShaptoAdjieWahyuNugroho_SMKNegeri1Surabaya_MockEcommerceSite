@@ -49,11 +49,6 @@ const submitLogin = async () => {
                     class="formItemInput"
                     :placeholder="item.placeholder" :required="item.required">
             </div>
-            <div class="fail">
-                WARNING: This will send your email and password in PLAIN TEXT, <br>
-                and is VERY vulnerable to <a href="https://w.wiki/3S77" class="link">MITM attacks</a>. PLEASE do not use your usual password. <br>
-                We also recommend you to use a <a href="https://google.com/search?q=temp-mail" class="link">temporary email address</a> for email verification.
-            </div>
             <button type="submit"
                 class="submit">
                 <span v-if="!isLoading">Login to your account</span>
