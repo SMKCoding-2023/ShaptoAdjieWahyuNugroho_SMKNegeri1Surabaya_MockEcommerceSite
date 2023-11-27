@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import type {Product} from '~/types/product';
 
-definePageMeta({middleware: ["user-access"]});
-
 const products = ref<Product[]>([]);
 const totalPrice = computed(() => {
     let subtotal = 0
@@ -34,45 +32,19 @@ const confirm = () => {
 
 <template>
 <section>
-    <div>
-        <div class="leftContainer">
-            <div class="headingContainer">
-                <h1 class="heading">Checkout</h1>
-                <p class="heading">{{products.length}} Item{{products.length !== 1 ? "s" : ""}}</p>
-            </div>
-            <h3 class="orderHeading">Order Summary</h3>
-            <div class="orderContainer">
-                <div v-if="products.length > 0">
-                    <div v-for="(v, index) in products" :key="index" class="product">
-                        <span class="productName">{{v.name}} (x{{v.quantity}})</span>
-                        <span class="productPrice">${{(v.quantity ?? 0) * (v.price ?? 0)}}</span>
-                    </div>
-                </div>
-                <div v-else>
-                    <p class="emptyCart">You have no items in your cart.</p>
-                </div>
-            </div>
-            <div v-if="products.length > 0" class="totalPriceContainer">
-                <span class="totalText">Total</span>
-                <span class="totalPrice">${{totalPrice}}</span>
-            </div>
-            <div v-else style="height: 1rem;"/>
-            
-        </div>
-        <div class="rightContainer">
-            <button @click="confirm" :class="(products.length > 0 ? 'checkout' : 'disabled')">
-                Confirm Order
-            </button>
-        </div>
+    <div class="headingContainer">
+        <h1 class="heading">Thank you for purchasing at our online shop!</h1>
     </div>
+    <h3 class="orderHeading">Your package is being delivered to your location.</h3>
+    <span class="totalPrice">Estimated Time of Arrival: 13752850928 years, 11 months, 16 days</span>
+    <p>Current status: Package was dropped into a black hole</p>
+    <div style="margin-bottom: 10rem;"></div>
 </section>
 </template>
 
 <style scoped>
-section > div {
-    padding: 2.5rem;
-    display: flex;
-    gap: 1.5rem;
+section {
+    padding: 2rem;
 }
 div.leftContainer { width: 70% }
 div.headingContainer {
