@@ -26,10 +26,10 @@ const onSelectCategory = (category: string) => {
         <div>
             <div class="buttons">
                 <NuxtLink to="/category/create" class="create-category">
-                    Create Category
+                    <i class="ri-add-line"/> Category
                 </NuxtLink>
                 <NuxtLink to="/product/create" class="create-product">
-                    Create Products
+                    <i class="ri-add-line"/> Products
                 </NuxtLink>
                 <Dropdown @selected-category="onSelectCategory" />
             </div>
@@ -91,5 +91,11 @@ section.productSection > div {
 }
 .product {
     width: calc(100% / 4 - 18px);
+}
+
+i {
+    font-size: x-large;
+    padding-top: 0.1rem;
+    margin: -0.5rem 0.5rem -0.5rem 0rem;
 }
 </style>

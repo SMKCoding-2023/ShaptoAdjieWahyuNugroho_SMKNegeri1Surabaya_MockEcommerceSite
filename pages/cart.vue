@@ -1,9 +1,29 @@
 <script lang="ts" setup>
 import type {Product} from '~/types/product';
+import { useProductsStore } from "~/stores/products";
 
 definePageMeta({middleware: ["user-access"]});
 
 const products = ref<Product[]>([]);
+const onlineProducts = useProductsStore();
+
+
+onMounted(() => {
+    let localStorageData = localStorage.getItem("products");
+    if (localStorageData) {
+        products.value = JSON.parse(localStorageData);
+    }
+});
+
+// delete unavailable items
+watch(onlineProducts.products, () => {
+    products.value = products.value.filter((item) => {
+        return onlineProducts.products.find((product: Product) => product.id === item.id);
+    });
+    localStorage.setItem("products", JSON.stringify(products.value));
+});
+
+
 const totalPrice = computed(() => {
     let subtotal = 0
     products.value.forEach((product) => {
@@ -15,13 +35,6 @@ const removeFromCart = (id: number) => {
     products.value = products.value.filter((item) => item.id !== id);
     localStorage.setItem("products", JSON.stringify(products.value));
 }
-
-onMounted(() => {
-    let localStorageData = localStorage.getItem("products");
-    if (localStorageData) {
-        products.value = JSON.parse(localStorageData);
-    }
-})
 
 const router = useRouter();
 const checkOut = () => {

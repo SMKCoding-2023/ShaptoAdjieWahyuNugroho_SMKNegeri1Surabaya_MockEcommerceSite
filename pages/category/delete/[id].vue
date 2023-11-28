@@ -1,20 +1,19 @@
 <script lang="ts" setup>
-import { useProductsStore } from "~/stores/products";
-import { Product } from "~/types/product";
+import { useCategoryStore } from "~/stores/category";
 
 const { baseStorageUrl } = useAppConfig();
 const isLoading = ref(true);
-const productStore = useProductsStore();
+const categoryStore = useCategoryStore();
 const route = useRoute();
 
-const product = ref({} as Product);
+const category = ref({});
 
 const id = typeof route.params.id === 'string' ? parseInt(route.params.id) : null;
 
-productStore.getProductList().then(() => {
-    product.value = productStore.products.find((item: Product) => item.id === id);
-    if(!product.value){
-        alert(`Product with ID ${id} not found! Press OK to redirect to product page.`);
+categoryStore.getCategoryList().then(() => {
+    category.value = categoryStore.categories.find((item: any) => item.id === id);
+    if(!category.value){
+        alert(`Category with ID ${id} not found! Press OK to redirect to product page.`);
         useRouter().push({ path: "/product" });
         return;
     }
@@ -22,17 +21,13 @@ productStore.getProductList().then(() => {
 });
 
 
-const deleteProduct = () => {
-    // remove from cart
-    products.value = products.value.filter((item) => item.id !== id);
-    localStorage.setItem("products", JSON.stringify(products.value));
-    
-    productStore.deleteProduct(id).then(() => {
-        if(!productStore.status){
-            alert(productStore.message);
+const deleteCategory = () => {
+    categoryStore.deleteCategory(id).then(() => {
+        if(!categoryStore.status){
+            alert(categoryStore.message);
             return;
         }
-        alert("Product deleted successfully.\nPress OK to return to the product page.");
+        alert("Category deleted successfully.\nPress OK to return to the product page.");
         useRouter().push({ path: "/product" });
     });
 }
@@ -40,15 +35,14 @@ const deleteProduct = () => {
 
 <template>
     <h1 v-if="isLoading">
-        Loading product, please wait...
+        Loading category, please wait...
     </h1>
     <div v-else>
         <h1>
-            Are you sure you want to delete {{ product.name }}?
+            Are you sure you want to delete {{ category.name }}?
         </h1>
-        <img :src="baseStorageUrl + product.image" :alt="product.desc">
         <div class="choice">
-            <button @click="deleteProduct" class="delete">
+            <button @click="deleteCategory" class="delete">
                 <i class="ri-delete-bin-2-line"></i>
                 <span>Delete</span>
             </button>
