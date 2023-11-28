@@ -27,7 +27,7 @@ const submitLogin = async () => {
     message.value = authStore.message;
     isShowAlert.value = true;
     isLoading.value = false;
-    if (authStore.status){
+    if (isSuccess.value){
         router.push({path: "/product"})
     }
 }

@@ -47,6 +47,7 @@ const onPick = (category: string) => {
 .dropdown-container {
     position: relative;
     user-select: none;
+    width: 20rem;
 }
 div.dropdown-text-div {
     border: 1px solid var(--primary-color);

@@ -13,11 +13,32 @@ export const useAuthStore = defineStore("auth", {
             const cookie = useCookie("access_token", { maxAge: data.expires_in });
             cookie.value = data.access_token;
         },
+        getAccessToken() {
+            const cookie = useCookie("access_token");
+            return cookie.value;
+        },
+        getHeaders() : {apikey: string, Authentication?: string} {
+            const { apikey } = useAppConfig();
+            const token = this.getAccessToken();
+            if(token) {
+                return {
+                    apikey: apikey,
+                    Authentication: token,
+                }
+            } else {
+                console.log("No token found. Is user logged out?");
+                return { apikey: apikey };
+            }
+        },
         setRefreshToken(data: any) {
             const date = new Date();
             date.setFullYear(date.getFullYear() + 1);
             const cookie = useCookie("refresh_token", { expires: date });
             cookie.value = data.refresh_token;
+        },
+        getRefreshToken() {
+            const cookie = useCookie("refresh_token");
+            return cookie.value;
         },
         async login(payload: AuthPayload) {
             try {

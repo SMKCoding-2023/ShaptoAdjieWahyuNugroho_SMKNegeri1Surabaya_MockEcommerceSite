@@ -10,6 +10,15 @@ const productList = ref([]);
 productStore.getProductList().then(() => {
     productList.value = productStore.products;
 });
+
+const onSelectCategory = (category: string) => {
+    selectedCategory.value = category;
+    if(category === ""){
+        productList.value = productStore.products;
+    } else {
+        productList.value = productStore.products.filter((item) => item.category === category);
+    }
+}
 </script>
 
 <template>
@@ -22,7 +31,7 @@ productStore.getProductList().then(() => {
                 <NuxtLink to="/product/create" class="create-product">
                     Create Products
                 </NuxtLink>
-                <Dropdown @selected-category="selectedCategory = $event" />
+                <Dropdown @selected-category="onSelectCategory" />
             </div>
             <div class="products">
                 <template v-for="(item, index) in productList" :key="index">
